@@ -19,21 +19,32 @@ const courses = [
 ]
 
 function App() {
-  const [checked, setChecked] = useState(2);
+  const [checked, setChecked] = useState([]);
   console.log(checked);
-  const handleSubmit = () => {
+  const handleCheck = (id) => {
     //call API
-    console.log({ id: checked });
+    setChecked(priv => {
+      const isChecked = checked.includes(id)
+      if (isChecked) {
+        // check
+        return checked.filter(item => item !== id)
+      } else {
+        return [...priv, id]
+      }
+    })
 
+  }
+  const handleSubmit = () => {
+    console.log({ id: checked });
   }
   return (
     <div className="App" style={{ padding: 20 }}>
       {courses.map(course => (
         <div key={course.id}>
-          <input type="radio"
+          <input type="checkbox"
             //so sánh
-            checked={checked === course.id}
-            onChange={() => setChecked(course.id)}
+            checked={checked.includes(course.id)}
+            onChange={() => handleCheck(course.id)}
           />
           {course.name}
         </div>
