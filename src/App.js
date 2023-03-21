@@ -1,23 +1,44 @@
 import { useState } from "react"
 
 
-const gifts = [
+//respon from api
 
-  "cpu i9",
-  "Ram 32G RGB",
-  "RGB Keybroad"
+const courses = [
+  {
+    id: 1,
+    name: "HTML, CSS"
+  },
+  {
+    id: 2,
+    name: "JAVÁCRIPT"
+  },
+  {
+    id: 3,
+    name: "REACTJS"
+  },
 ]
 
 function App() {
-  const [gift, setGift] = useState()
-  const randomGift = () => {
-    const index = Math.floor(Math.random() * gifts.length)
-    setGift(gifts[index])
+  const [checked, setChecked] = useState(2);
+  console.log(checked);
+  const handleSubmit = () => {
+    //call API
+    console.log({ id: checked });
+
   }
   return (
     <div className="App" style={{ padding: 20 }}>
-      <h1>{gift || `Chưa có phần thưởng`} </h1>
-      <button onClick={randomGift}>Lấy thưởng</button>
+      {courses.map(course => (
+        <div key={course.id}>
+          <input type="radio"
+            //so sánh
+            checked={checked === course.id}
+            onChange={() => setChecked(course.id)}
+          />
+          {course.name}
+        </div>
+      ))}
+      <button onClick={handleSubmit}>Lấy thưởng</button>
     </div>
   );
 }
